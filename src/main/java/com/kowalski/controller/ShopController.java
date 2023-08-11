@@ -1,9 +1,9 @@
 package com.kowalski.controller;
 
-import com.kowalski.pojo.Goods;
-import com.kowalski.pojo.query.GoodsQuery;
-import com.kowalski.service.IGoodsService;
-import com.kowalski.service.impl.GoodsServiceImpl;
+import com.kowalski.pojo.Shop;
+import com.kowalski.pojo.query.ShopQuery;
+import com.kowalski.service.IShopService;
+import com.kowalski.service.impl.ShopServiceImpl;
 import com.kowalski.utils.JSONUtil;
 import com.kowalski.utils.LayUITableResult;
 import com.kowalski.utils.Result;
@@ -21,12 +21,12 @@ import java.io.IOException;
  * @version 1.0
  * @Date 2023/8/10 19:40
  */
-@WebServlet("/goods")
-public class goodsController extends HttpServlet {
-    private IGoodsService iGoodsService = new GoodsServiceImpl();
+@WebServlet("/shop")
+public class ShopController extends HttpServlet {
+    private IShopService iShopService = new ShopServiceImpl();
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("goodsController.service");
+        System.out.println("shopController.service");
         String method = req.getParameter("method");
         if(method == null || "".equals(method)){
             method = "selectByPage";
@@ -44,67 +44,63 @@ public class goodsController extends HttpServlet {
             case "deleteAll":
                 deleteAll(req, resp);
                 break;
-            case "getGoodsUpdatePage":
-                getGoodsUpdatePage(req, resp);
+            case "getShopUpdatePage":
+                getShopUpdatePage(req, resp);
                 break;
-            case "updateGoods":
+            case "updateShop":
                 update(req, resp);
                 break;
         }
     }
 
     private void update(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("goodsController.update");
+        System.out.println("shopController.update");
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
-        String specs = req.getParameter("specs");
-        double price = Double.parseDouble(req.getParameter("price"));
-        int store = Integer.parseInt(req.getParameter("store"));
-        Goods goods = new Goods(id, name, specs, price, store);
-        boolean isSuccess = iGoodsService.update(goods);
+        String address = req.getParameter("address");
+        Shop shop = new Shop(id, name, address);
+        boolean isSuccess = iShopService.update(shop);
         Result result = isSuccess ? Result.ok("编辑成功") : Result.error("编辑失败");
         JSONUtil.toJSON(resp, result);
     }
 
     @SneakyThrows
-    private void getGoodsUpdatePage(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("goodsController.getGoodsUpdatePage");
+    private void getShopUpdatePage(HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println("shopController.getShopUpdatePage");
         int id = Integer.parseInt(req.getParameter("id"));
-        Goods goods = iGoodsService.getGoodsUpdatePage(id);
-        req.setAttribute("goods", goods);
-        req.getRequestDispatcher("updateGoods.jsp").forward(req, resp);
+        Shop shop = iShopService.getShopUpdatePage(id);
+        req.setAttribute("shop", shop);
+        req.getRequestDispatcher("updateShop.jsp").forward(req, resp);
     }
 
     private void deleteAll(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("goodsController.deleteAll");
+        System.out.println("shopController.deleteAll");
         String[] ids = req.getParameterValues("ids[]");
-        boolean isSuccess = iGoodsService.deleteAll(ids);
+        boolean isSuccess = iShopService.deleteAll(ids);
         Result result = isSuccess ? Result.ok("删除成功") : Result.error("删除失败");
         JSONUtil.toJSON(resp, result);
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("goodsController.delete");
+        System.out.println("shopController.delete");
         int id = Integer.parseInt(req.getParameter("id"));
-        boolean isSuccess = iGoodsService.delete(id);
+        boolean isSuccess = iShopService.delete(id);
         Result result = isSuccess ? Result.ok("删除成功") : Result.error("删除失败");
         JSONUtil.toJSON(resp, result);
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("goodsController.add");
+        System.out.println("shopController.add");
         String name = req.getParameter("name");
-        String specs = req.getParameter("specs");
-        String price = req.getParameter("price");
-        String store = req.getParameter("store");
-        Goods goods = new Goods(name, specs, Double.parseDouble(price), Integer.parseInt(store));
-        boolean isSuccess = iGoodsService.add(goods);
+        String address = req.getParameter("address");
+        Shop shop = new Shop(name, address);
+        boolean isSuccess = iShopService.add(shop);
         Result result = isSuccess ? Result.ok("添加成功") : Result.error("添加失败");
         JSONUtil.toJSON(resp, result);
     }
 
     private void selectByPage(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("goodsController.selectAll");
+        System.out.println("shopController.selectAll");
         //设置默认页数
         String pageStr = req.getParameter("page");
         if(pageStr == null || "".equals(pageStr)){
@@ -123,8 +119,8 @@ public class goodsController extends HttpServlet {
         }
 
         String name = req.getParameter("name");
-        GoodsQuery gq = new GoodsQuery(page, limit, i, name);
-        LayUITableResult layUITableResult = iGoodsService.selectByPage(gq);
+        ShopQuery gq = new ShopQuery(page, limit, i, name);
+        LayUITableResult layUITableResult = iShopService.selectByPage(gq);
         JSONUtil.toJSON(resp, layUITableResult);
     }
 }

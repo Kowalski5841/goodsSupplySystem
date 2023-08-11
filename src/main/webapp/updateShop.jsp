@@ -1,4 +1,4 @@
-<%@ page import="com.kowalski.pojo.Goods" %><%--
+<%@ page import="com.kowalski.pojo.Shop" %><%--
   Created by IntelliJ IDEA.
   User: 18157
   Date: 2023/7/27
@@ -10,12 +10,12 @@
 <html>
 <head>
     <%@ include file="header.jsp"%>
-    <title>修改商品</title>
+    <title>编辑商户信息</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/layui/css/layui.css"  media="all">
 </head>
 <body>
 <%
-    Goods goods = (Goods) request.getAttribute("goods");
+    Shop shop = (Shop) request.getAttribute("shop");
 %>
 <form id="formId" class="layui-form layui-form-pane" action="">
     <div class="layui-form-item">
@@ -23,44 +23,26 @@
         <div class="layui-input-block">
             <input type="text" name="id" autocomplete="off"
                     class="layui-input" readonly
+                   value="<%=shop.getId()%>"
                    style="color: #555555"
-                   value="<%=goods.getId()%>"
             >
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">商品名</label>
+        <label class="layui-form-label">商户名称</label>
         <div class="layui-input-block">
             <input type="text" name="name" autocomplete="off"
-                   placeholder="请输入商品名" class="layui-input"
-                   value="<%=goods.getName()%>"
+                   placeholder="请输入商户名" class="layui-input"
+                   value="<%=shop.getName()%>"
             >
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">规格</label>
+        <label class="layui-form-label">商户地址</label>
         <div class="layui-input-block">
-            <input type="text" name="specs" autocomplete="off"
-                   placeholder="请描述商品规格" class="layui-input"
-                   value="<%=goods.getSpecs()%>"
-            >
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">单价</label>
-        <div class="layui-input-block">
-            <input type="text" name="price" autocomplete="off"
-                   placeholder="请输入单价" class="layui-input"
-                   value="<%=goods.getPrice()%>"
-            >
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">库存</label>
-        <div class="layui-input-block">
-            <input type="text" name="store" autocomplete="off"
-                   placeholder="请输入库存" class="layui-input"
-                   value="<%=goods.getStore()%>"
+            <input type="text" name="address" autocomplete="off"
+                   placeholder="请填写商户地址" class="layui-input"
+                   value="<%=shop.getAddress()%>"
             >
         </div>
     </div>
@@ -74,7 +56,7 @@
 <script>
     function submitForm() {
         $.post(
-            '<%=request.getContextPath()%>/goods?method=updateGoods',
+            '<%=request.getContextPath()%>/shop?method=updateShop',
             $('#formId').serialize(),
             function(result) {
                 console.log(result);

@@ -55,8 +55,8 @@
                         </dd>
                         <dd>
                             <a href="javascript:;"
-                               data-url="<%=request.getContextPath()%>/course"
-                               class="site-demo-active">课程管理</a>
+                               data-url="<%=request.getContextPath()%>/shopList.jsp"
+                               class="site-demo-active">商户管理</a>
                         </dd>
                         <dd>
                             <a href="javascript:;"
