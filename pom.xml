@@ -86,7 +86,7 @@
           <version>2.2</version>
           <configuration>
             <port>8080</port>
-            <path>/goods</path>
+            <path>/gss</path>
             <uriEncoding>UTF-8</uriEncoding>
           </configuration>
         </plugin>

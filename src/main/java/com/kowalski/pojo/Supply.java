@@ -16,4 +16,9 @@ public class Supply {
     private Integer id;
     private String name;
     private String address;
+
+    public Supply(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 }

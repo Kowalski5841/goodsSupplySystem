@@ -18,4 +18,11 @@ public class Goods {
     private String specs;
     private Double price;
     private Integer store;
+
+    public Goods(String name, String specs, Double price, Integer store) {
+        this.name = name;
+        this.specs = specs;
+        this.price = price;
+        this.store = store;
+    }
 }

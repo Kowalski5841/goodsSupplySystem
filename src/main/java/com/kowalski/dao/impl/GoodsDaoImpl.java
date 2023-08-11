@@ -92,4 +92,71 @@ public class GoodsDaoImpl implements IGoodsDao {
         JDBCUtil.close(conn, pStmt, rs);
         return count;
     }
+
+    @Override
+    @SneakyThrows
+    public int add(Goods goods) {
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "insert into goods(name, specs, price, store) values(?,?,?,?)";
+        PreparedStatement pStmt = conn.prepareStatement(sql);
+        pStmt.setString(1, goods.getName());
+        pStmt.setString(2, goods.getSpecs());
+        pStmt.setDouble(3, goods.getPrice());
+        pStmt.setInt(4, goods.getStore());
+        System.out.println("本次执行的语句时是" + pStmt);
+        int count = pStmt.executeUpdate();
+        JDBCUtil.close(conn, pStmt, null);
+        return count;
+    }
+
+    @Override
+    @SneakyThrows
+    public int delete(int id) {
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "delete from goods where id = ?";
+        PreparedStatement pStmt = conn.prepareStatement(sql);
+        pStmt.setInt(1, id);
+        System.out.println("本次执行的语句时是" + pStmt);
+        int count = pStmt.executeUpdate();
+        JDBCUtil.close(conn, pStmt, null);
+        return count;
+    }
+
+    @SneakyThrows
+    @Override
+    public Goods getGoodsUpdatePage(int id) {
+        Goods goods = null;
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "select * from goods where id = ?";
+        PreparedStatement pStmt = conn.prepareStatement(sql);
+        pStmt.setInt(1, id);
+        System.out.println(pStmt);
+        ResultSet rs = pStmt.executeQuery();
+        if(rs.next()){
+            String name = rs.getString("name");
+            String specs = rs.getString("specs");
+            double price = rs.getDouble("price");
+            int store = rs.getInt("store");
+            goods = new Goods(id, name, specs, price, store);
+        }
+        System.out.println("获取到的对象：" + goods);
+        return goods;
+    }
+
+    @Override
+    @SneakyThrows
+    public int update(Goods goods) {
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "update goods set name = ?, specs = ?, price = ?, store = ? where id = ?";
+        PreparedStatement pStmt = conn.prepareStatement(sql);
+        pStmt.setString(1, goods.getName());
+        pStmt.setString(2, goods.getSpecs());
+        pStmt.setDouble(3, goods.getPrice());
+        pStmt.setInt(4, goods.getStore());
+        pStmt.setInt(5, goods.getId());
+        System.out.println("本次执行的语句时是" + pStmt);
+        int count = pStmt.executeUpdate();
+        JDBCUtil.close(conn, pStmt, null);
+        return count;
+    }
 }

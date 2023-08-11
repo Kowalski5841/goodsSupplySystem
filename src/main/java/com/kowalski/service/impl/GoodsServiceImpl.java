@@ -22,4 +22,38 @@ public class GoodsServiceImpl implements IGoodsService {
         Integer count = iGoodsDao.selectCount(gq);
         return LayUITableResult.ok(count, list);
     }
+
+    @Override
+    public boolean add(Goods goods) {
+        int count = iGoodsDao.add(goods);
+        return count == 1;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        int count = iGoodsDao.delete(id);
+        return count == 1;
+    }
+
+    @Override
+    public boolean deleteAll(String[] ids) {
+        int count = 0;
+        for (String id : ids) {
+            count += iGoodsDao.delete(Integer.parseInt(id));
+        }
+        return  count == ids.length;
+    }
+
+    @Override
+    public Goods getGoodsUpdatePage(int id) {
+        System.out.println("GoodsServiceImpl.getGoodsUpdatePage");
+        return iGoodsDao.getGoodsUpdatePage(id);
+    }
+
+    @Override
+    public boolean update(Goods goods) {
+        System.out.println("GoodsServiceImpl.update");
+        int count = iGoodsDao.update(goods);
+        return count == 1;
+    }
 }

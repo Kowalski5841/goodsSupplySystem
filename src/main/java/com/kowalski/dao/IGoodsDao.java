@@ -14,4 +14,12 @@ public interface IGoodsDao {
     List<Goods> selectByPage(GoodsQuery gq);
 
     Integer selectCount(GoodsQuery gq);
+
+    int add(Goods goods);
+
+    int delete(int id);
+
+    Goods getGoodsUpdatePage(int id);
+
+    int update(Goods goods);
 }
