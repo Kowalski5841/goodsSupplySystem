@@ -17,6 +17,11 @@ public class Supply {
     private String name;
     private String address;
 
+    public Supply(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Supply(String name, String address) {
         this.name = name;
         this.address = address;

@@ -127,4 +127,20 @@ public class SupplyRecordsDaoImpl implements ISupplyRecordsDao {
         JDBCUtil.close(conn, pStmt, rs);
         return count;
     }
+
+    @Override
+    @SneakyThrows
+    public int add(int supplyId, int shopId, int goodsId, int count) {
+        Connection conn = JDBCUtil.getConnection();
+        String sql = "insert into supply_records(supply_id, shop_id, goods_id, count) values(?,?,?,?)";
+        PreparedStatement pStmt = conn.prepareStatement(sql);
+        pStmt.setInt(1, supplyId);
+        pStmt.setInt(2, shopId);
+        pStmt.setInt(3, goodsId);
+        pStmt.setInt(4, count);
+        System.out.println("本次执行的语句时是" + pStmt);
+        int i = pStmt.executeUpdate();
+        JDBCUtil.close(conn, pStmt, null);
+        return i;
+    }
 }

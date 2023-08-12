@@ -1,5 +1,6 @@
 package com.kowalski.dao;
 
+import com.kowalski.pojo.Supply;
 import com.kowalski.pojo.SupplyRecords;
 import com.kowalski.pojo.query.SupplyRecordsQuery;
 
@@ -14,4 +15,6 @@ public interface ISupplyRecordsDao {
     List<SupplyRecords> select(SupplyRecordsQuery supplyRecordsQuery);
 
     Integer selectCount(SupplyRecordsQuery supplyRecordsQuery);
+
+    int add(int supplyId, int shopId, int goodsId, int count);
 }

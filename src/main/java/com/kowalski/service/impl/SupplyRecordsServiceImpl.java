@@ -4,7 +4,7 @@ import com.kowalski.dao.ISupplyRecordsDao;
 import com.kowalski.dao.impl.SupplyRecordsDaoImpl;
 import com.kowalski.pojo.SupplyRecords;
 import com.kowalski.pojo.query.SupplyRecordsQuery;
-import com.kowalski.service.ISupplyRecordService;
+import com.kowalski.service.ISupplyRecordsService;
 import com.kowalski.utils.LayUITableResult;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @version 1.0
  * @Date 2023/8/12 10:42
  */
-public class SupplyRecordsServiceImpl implements ISupplyRecordService {
+public class SupplyRecordsServiceImpl implements ISupplyRecordsService {
     private ISupplyRecordsDao iSupplyRecordsDao = new SupplyRecordsDaoImpl();
     @Override
     public LayUITableResult select(SupplyRecordsQuery supplyRecordsQuery) {
@@ -22,5 +22,12 @@ public class SupplyRecordsServiceImpl implements ISupplyRecordService {
         List<SupplyRecords> list = iSupplyRecordsDao.select(supplyRecordsQuery);
         Integer total = iSupplyRecordsDao.selectCount(supplyRecordsQuery);
         return LayUITableResult.ok(total, list);
+    }
+
+    @Override
+    public boolean add(int supplyId, int shopId, int goodsId, int count) {
+        System.out.println("SupplyRecordsServiceImpl.add");
+        int i = iSupplyRecordsDao.add(supplyId, shopId, goodsId, count);
+        return i == 1;
     }
 }

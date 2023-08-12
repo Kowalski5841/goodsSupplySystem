@@ -25,4 +25,9 @@ public class Goods {
         this.price = price;
         this.store = store;
     }
+
+    public Goods(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

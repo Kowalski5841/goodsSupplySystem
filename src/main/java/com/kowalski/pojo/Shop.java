@@ -17,6 +17,11 @@ public class Shop {
     private String name;
     private String address;
 
+    public Shop(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Shop(String name, String address) {
         this.name = name;
         this.address = address;

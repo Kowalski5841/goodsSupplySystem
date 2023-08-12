@@ -8,7 +8,9 @@ import com.kowalski.utils.LayUITableResult;
  * @version 1.0
  * @Date 2023/8/12 10:41
  */
-public interface ISupplyRecordService {
+public interface ISupplyRecordsService {
 
     LayUITableResult select(SupplyRecordsQuery supplyRecordsQuery);
+
+    boolean add(int supplyId, int shopId, int goodsId, int count);
 }

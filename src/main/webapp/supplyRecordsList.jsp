@@ -89,8 +89,8 @@
                 case 'add':
                     layer.open({
                         type: 2,
-                        area: ['350px', '550px'],
-                        content: '<%=request.getContextPath()%>/addGoods.jsp'
+                        area: ['600px', '350px'],
+                        content: '<%=request.getContextPath()%>/addSupplyRecords1.jsp'
                     });
                     break;
                 case 'isAll':
