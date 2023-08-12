@@ -11,13 +11,9 @@
         <input class="layui-input" name="goodsName" id="goodsName" autocomplete="off">
     </div>
 
-    商店名：
+    顾客：
     <div class="layui-inline">
-        <input class="layui-input" name="shopName" id="shopName" autocomplete="off">
-    </div>
-    供应商：
-    <div class="layui-inline">
-        <input class="layui-input" name="supplyName" id="supplyName" autocomplete="off">
+        <input class="layui-input" name="customer" id="customer" autocomplete="off">
     </div>
     <button class="layui-btn" data-type="reload">搜索</button>
 </div>
@@ -36,24 +32,19 @@
         var form = layui.form;
         table.render({
             elem: '#test'
-            ,url:'<%=request.getContextPath()%>/supplyRecords?method=select'
+            ,url:'<%=request.getContextPath()%>/saleRecords?method=select'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
                 ,layEvent: 'LAYTABLE_TIPS'
                 ,icon: 'layui-icon-tips'
             }]
-            ,title: '供应流水表'
+            ,title: '销售流水表'
             ,cols: [[
                 {field:'id', title:'ID', fixed: 'left'}
                 ,{field:'goodsName', title:'商品名'}
-                ,{field:'specs', title:'规格'}
-                ,{field:'price', title:'单价'}
-                ,{field:'count', title:'数量'}
-                ,{field:'shopName', title:'商店名'}
-                ,{field:'shopAddress', title:'商店地址'}
-                ,{field:'supplyName', title:'供应商'}
-                ,{field:'supplyAddress', title:'地址'}
+                ,{field:'customer', title:'顾客'}
+                ,{field:'sold', title:'数量'}
             ]]
             ,page: true
             ,id: 'tableId'
@@ -90,7 +81,7 @@
                     layer.open({
                         type: 2,
                         area: ['600px', '350px'],
-                        content: '<%=request.getContextPath()%>/addSupplyRecords1.jsp'
+                        content: '<%=request.getContextPath()%>/addSaleRecords.jsp'
                     });
                     break;
                 case 'isAll':
@@ -104,16 +95,6 @@
             };
         });
 
-        //监听行工具事件
-        table.on('tool(test)', function(obj){
-            //{id: 2, name: 'zhansgan', password: '23', age: 0, gender: null}
-            var data = obj.data;
-            console.log(obj)
-            console.log('---------')
-            console.log(obj.data)
-            console.log(obj.data.id)
-        });
-
         var $ = layui.$, active = {
             reload: function(){
                 //执行重载
@@ -124,9 +105,7 @@
                     ,where: {
                         // /goods?method=selectByPage&page=1&limit=10&name=zhasang&gender=男
                         goodsName: $('#goodsName').val(),
-                        shopName: $('#shopName').val(),
-                        supplyName: $('#supplyName').val(),
-
+                        customer: $('#customer').val(),
                     }
                 });
             }

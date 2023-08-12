@@ -65,8 +65,8 @@
                         </dd>
                         <dd>
                             <a href="javascript:;"
-                               data-url="<%=request.getContextPath()%>/userList.jsp"
-                               class="site-demo-active">管理员管理</a>
+                               data-url="<%=request.getContextPath()%>/saleRecordsList.jsp"
+                               class="site-demo-active">销售流水</a>
                         </dd>
                         <dd>
                             <a href="javascript:;"

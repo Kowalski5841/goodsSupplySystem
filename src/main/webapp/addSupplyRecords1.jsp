@@ -36,6 +36,7 @@
 
 <script>
     var supplyId, shopId, goodsId
+    var cc
     $('#supplyId').change(function () {
         supplyId = $('#supplyId').val()
     })
@@ -49,7 +50,7 @@
     })
 
     function submitForm() {
-        var cc = $('#cc').val()
+        cc = $('#cc').val()
 
         // $.ajax({
         //     url: '',
