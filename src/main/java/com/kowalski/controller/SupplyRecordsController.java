@@ -57,10 +57,15 @@ public class SupplyRecordsController extends HttpServlet {
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) {
-        int supplyId = Integer.parseInt(req.getParameter("supplyId"));
-        int shopId = Integer.parseInt(req.getParameter("shopId"));
-        int goodsId = Integer.parseInt(req.getParameter("goodsId"));
-        int count = Integer.parseInt(req.getParameter("count"));
+        System.out.println("-----------------");
+        System.out.println(req.getParameter("shop"));
+        System.out.println(req.getParameter("supply"));
+        System.out.println(req.getParameter("goods"));
+        System.out.println("-----------------");
+        int supplyId = Integer.parseInt(req.getParameter("supply"));
+        int shopId = Integer.parseInt(req.getParameter("shop"));
+        int goodsId = Integer.parseInt(req.getParameter("goods"));
+        int count = Integer.parseInt(req.getParameter("cc"));
         boolean isSuccess = iSupplyRecordsService.add(supplyId, shopId, goodsId, count);
         Result result = isSuccess ? Result.ok("添加成功") : Result.error("添加失败");
         JSONUtil.toJSON(resp, result);

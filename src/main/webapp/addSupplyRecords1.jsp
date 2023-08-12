@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.jsp"%>
+<%@ include file="header.jsp" %>
 <html>
 <head>
     <title>Title</title>
@@ -15,34 +15,82 @@
 <form id="formId" method="post">
     <span style="margin-left: 10px">供应商：</span>
 
-    <select id="supplyId" >
+    <select id="supplyId" name="supply">
         <option>---请选择供应商---</option>
     </select>
     商户：
-    <select id="shopId">
+    <select id="shopId" name="shop">
         <option>---请选择商户---</option>
     </select>
     商品名：
-    <select id="goodsId">
+    <select id="goodsId" name="goods">
         <option>---请选择商品名---</option>
     </select>
     <HR style="margin: 20px">
     <br>
     <span style="margin-left: 10px">数量：</span>
-    <input id="count" name="count" type="text"/><br>
+    <%--    <input type="text" name="cc" id="cc"/><br>--%>
+    <input type="text" name="cc" id="cc">
     <input class="layui-btn" type="button" onclick="submitForm()" value="提交">
 </form>
 
 <script>
-    function submitForm(){
+    var supplyId, shopId, goodsId
+    $('#supplyId').change(function () {
+        supplyId = $('#supplyId').val()
+    })
+
+    $('#shopId').change(function () {
+        shopId = $('#shopId').val()
+    })
+
+    $('#goodsId').change(function () {
+        goodsId = $('#goodsId').val()
+    })
+
+    function submitForm() {
+        var cc = $('#cc').val()
+
+        // $.ajax({
+        //     url: '',
+        //     method:'post',
+        //     data:{
+        //
+        //     },
+        //     // success:function (res){
+        //     //
+        //     // },
+        //     // error:function (res){
+        //     //
+        //     // },
+        //
+        //
+        //     success(){
+        //
+        //     },
+        //     error(){
+        //
+        //     },
+        //     dataType:'json'
+        //
+        // })
         $.post(
             '<%=request.getContextPath()%>/supplyRecords?method=add',
-            $('#formId').serialize(),
-            function (jsonObj){
+            {
+                supply: supplyId,
+                shop: shopId,
+                goods: goodsId,
+                cc: cc
+            },
+            function (jsonObj) {
                 console.log(jsonObj);
-                if(jsonObj.code === 200){
-                    mylayer.okUrl(jsonObj.msg,'<%=request.getContextPath()%>');
-                }else{
+                if (jsonObj.code === 200) {
+                    mylayer.okUrl(jsonObj.msg);
+                    var index = parent.layer.getFrameIndex(window.name)
+                    parent.layer.close(index);
+                    parent.layui.table.reload('tableId')
+
+                } else {
                     mylayer.errorMsg(jsonObj.msg);
                 }
             },
@@ -54,9 +102,9 @@
         $.post(
             '<%=request.getContextPath()%>/supplyRecords?method=selectSupply',
             function (jsonObj) {
-                console.log(jsonObj)
-                $(jsonObj).each(function (){
-                    $('#supplyId').append('<option value="'+this.id+'">'+this.name+'</option>');
+                // console.log(jsonObj)
+                $(jsonObj).each(function () {
+                    $('#supplyId').append('<option value="' + this.id + '">' + this.name + '</option>');
                 });
             },
             'json'
@@ -64,9 +112,9 @@
         $.post(
             '<%=request.getContextPath()%>/supplyRecords?method=selectShop',
             function (jsonObj) {
-                console.log(jsonObj)
-                $(jsonObj).each(function (){
-                    $('#shopId').append('<option value="'+this.id+'">'+this.name+'</option>');
+                // console.log(jsonObj)
+                $(jsonObj).each(function () {
+                    $('#shopId').append('<option value="' + this.id + '">' + this.name + '</option>');
                 });
             },
             'json'
@@ -74,9 +122,9 @@
         $.post(
             '<%=request.getContextPath()%>/supplyRecords?method=selectGoods',
             function (jsonObj) {
-                console.log(jsonObj)
-                $(jsonObj).each(function (){
-                    $('#goodsId').append('<option value="'+this.id+'">'+this.name+'</option>');
+                // console.log(jsonObj)
+                $(jsonObj).each(function () {
+                    $('#goodsId').append('<option value="' + this.id + '">' + this.name + '</option>');
                 });
             },
             'json'
