@@ -20,20 +20,20 @@ import java.util.List;
 public class SupplyDaoImpl implements ISupplyDao {
     @SneakyThrows
     @Override
-    public List<Supply> selectByPage(SupplyQuery gq) {
+    public List<Supply> selectByPage(SupplyQuery supplyQuery) {
         List<Supply> list = new ArrayList<>();
-        int offset =(gq.getPage() - 1) *gq.getLimit();
+        int offset =(supplyQuery.getPage() - 1) *supplyQuery.getLimit();
         Connection conn = JDBCUtil.getConnection();
         String sql = "SELECT id, name, address FROM supply where 1=1 ";
         List<Object> queryList = new ArrayList<>();
 
-        Integer queryId = gq.getId();
+        Integer queryId = supplyQuery.getId();
         if(queryId != null){
             sql += " and id = ? ";
             queryList.add(queryId);
         }
 
-        String queryName = gq.getName();
+        String queryName = supplyQuery.getName();
         if(queryName != null && !"".equals(queryName)){
             sql += " and name like ? ";
             queryList.add("%" + queryName + "%");
@@ -44,7 +44,7 @@ public class SupplyDaoImpl implements ISupplyDao {
             pStmt.setObject(i + 1, queryList.get(i));
         }
         pStmt.setInt(queryList.size() + 1, offset);
-        pStmt.setInt(queryList.size() + 2, gq.getLimit());
+        pStmt.setInt(queryList.size() + 2, supplyQuery.getLimit());
 
 
         System.out.println("执行的sql是" + pStmt);
@@ -62,18 +62,18 @@ public class SupplyDaoImpl implements ISupplyDao {
 
     @Override
     @SneakyThrows
-    public Integer selectCount(SupplyQuery gq) {
+    public Integer selectCount(SupplyQuery supplyQuery) {
         Integer count = 0;
         Connection conn = JDBCUtil.getConnection();
         String sql = "select count(*) from supply where 1=1 ";
         List<Object> queryList = new ArrayList<>();
-        Integer queryId = gq.getId();
+        Integer queryId = supplyQuery.getId();
         if(queryId != null){
             sql += " and id = ? ";
             queryList.add(queryId);
         }
 
-        String queryName = gq.getName();
+        String queryName = supplyQuery.getName();
         if(queryName != null && !"".equals(queryName)){
             sql += " and name like ? ";
             queryList.add("%" + queryName + "%");

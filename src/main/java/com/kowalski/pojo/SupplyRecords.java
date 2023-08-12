@@ -13,9 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupplyRecords {
-   private Integer id;
-   private Integer supplyId;
-   private Integer shopId;
-   private Integer goodsId;
-   private Integer count;
+   private int id;
+   private String goodsName;
+   private String specs;
+   private double price;
+   private int count;
+   private String shopName;
+   private String shopAddress;
+   private String supplyName;
+   private String supplyAddress;
 }
