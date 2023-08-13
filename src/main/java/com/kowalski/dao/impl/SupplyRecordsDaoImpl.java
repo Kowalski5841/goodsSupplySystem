@@ -4,6 +4,8 @@ import com.kowalski.dao.ISupplyRecordsDao;
 import com.kowalski.pojo.Supply;
 import com.kowalski.pojo.SupplyRecords;
 import com.kowalski.pojo.query.SupplyRecordsQuery;
+import com.kowalski.pojo.vo.SaleRecordsVO;
+import com.kowalski.pojo.vo.SupplyRecordsVO;
 import com.kowalski.utils.JDBCUtil;
 import lombok.SneakyThrows;
 
@@ -126,6 +128,31 @@ public class SupplyRecordsDaoImpl implements ISupplyRecordsDao {
         }
         JDBCUtil.close(conn, pStmt, rs);
         return count;
+    }
+
+    @Override
+    @SneakyThrows
+    public List<SupplyRecordsVO> selectCount() {
+        System.out.println("ClassDaoImpl.selectClassCount");
+        Connection conn = JDBCUtil.getConnection();
+        List<SupplyRecordsVO> list = new ArrayList<>();
+        String sql = "SELECT  goods.`name`, SUM(count) as s\n" +
+                "FROM supply_records\n" +
+                "INNER JOIN supply \n" +
+                "ON supply.id = supply_id\n" +
+                "INNER JOIN goods\n" +
+                "ON goods.id = goods_id\n" +
+                "WHERE 1=1\n" +
+                "GROUP BY goods.`name`";
+        PreparedStatement pStmt = conn.prepareStatement(sql);
+        ResultSet rs = pStmt.executeQuery();
+        while(rs.next()){
+            String goods = rs.getString("name");
+            int value = rs.getInt("s");
+            SupplyRecordsVO srv = new SupplyRecordsVO(goods, value);
+            list.add(srv);
+        }
+        return list;
     }
 
     @Override

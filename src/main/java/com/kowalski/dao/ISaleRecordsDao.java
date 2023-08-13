@@ -2,6 +2,7 @@ package com.kowalski.dao;
 
 import com.kowalski.pojo.SaleRecords;
 import com.kowalski.pojo.query.SaleRecordsQuery;
+import com.kowalski.pojo.vo.SaleRecordsVO;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public interface ISaleRecordsDao {
     List<SaleRecords> select(SaleRecordsQuery saleRecordsQuery);
 
     Integer selectCount(SaleRecordsQuery saleRecordsQuery);
+
+    List<SaleRecordsVO> selectCount();
 
     int add(int goodsId, String customer, int sold);
 }

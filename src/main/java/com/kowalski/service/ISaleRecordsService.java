@@ -1,7 +1,10 @@
 package com.kowalski.service;
 
 import com.kowalski.pojo.query.SaleRecordsQuery;
+import com.kowalski.pojo.vo.SaleRecordsVO;
 import com.kowalski.utils.LayUITableResult;
+
+import java.util.List;
 
 /**
  * @author Kowalski
@@ -14,4 +17,6 @@ public interface ISaleRecordsService {
 
 
     boolean add(int goodsId, String customer, int sold);
+
+    List<SaleRecordsVO> selectCount();
 }

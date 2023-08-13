@@ -26,32 +26,29 @@
     var myChart2 = echarts.init(document.getElementById('main2'));
 
     $.post(
-        '<%=request.getContextPath()%>/echarts',
+        '<%=request.getContextPath()%>/echarts?method=sale',
         function(jsonObj) {
             console.log(jsonObj);
             //[{name: 'java1807', value: 4},{name: 'java1812', value: 5}]
             var xArray = new Array();
             var yArray = new Array();
             $(jsonObj).each(function() {
-                xArray.push(this.name);
+                xArray.push(this.goods);
                 yArray.push(this.value);
             });
             // 指定图表的配置项和数据
             var option = {
                 title: {
-                    text: '班级人数统计'
+                    text: '销售流水统计'
                 },
                 tooltip: {},
-                legend: {
-                    data: ['人数']
-                },
                 xAxis: {
                     data: xArray
                 },
                 yAxis: {},
                 series: [
                     {
-                        name: '人数',
+                        name: '商品',
                         type: 'bar',
                         data: yArray
                     }
@@ -60,44 +57,51 @@
 
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
-
-            //饼状图
-            var option2 = {
-                title: {
-                    text: '班级人数饼状图',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left'
-                },
-                series: [
-                    {
-                        name: '人数',
-                        type: 'pie',
-                        radius: '50%',
-                        data: jsonObj,
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        }
-                    }
-                ]
-            };
-            myChart2.setOption(option2);
         },
         'json'
     );
 
+    //供应流水统计
+    $.post(
+        '<%=request.getContextPath()%>/echarts?method=supply',
+        function(jsonObj) {
+            console.log(jsonObj);
+            //[{name: 'java1807', value: 4},{name: 'java1812', value: 5}]
+            var xArray = new Array();
+            var yArray = new Array();
+            $(jsonObj).each(function() {
+                xArray.push(this.goods);
+                yArray.push(this.value);
+            });
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '供应流水统计'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['供应量']
+                },
+                xAxis: {
+                    data: xArray,
+                    axisLabel: { interval: 0, rotate: 30 }
+                },
+                yAxis: {},
+                series: [
+                    {
+                        name: '商品',
+                        type: 'bar',
+                        data: yArray
+                    }
+                ]
+            };
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+            // 使用刚指定的配置项和数据显示图表。
+            myChart2.setOption(option);
+        },
+        'json'
+    );
+
 </script>
 </body>
 </html>

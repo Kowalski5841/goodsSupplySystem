@@ -4,6 +4,7 @@ import com.kowalski.dao.ISaleRecordsDao;
 import com.kowalski.dao.impl.SaleRecordsDaoImpl;
 import com.kowalski.pojo.SaleRecords;
 import com.kowalski.pojo.query.SaleRecordsQuery;
+import com.kowalski.pojo.vo.SaleRecordsVO;
 import com.kowalski.service.ISaleRecordsService;
 import com.kowalski.utils.LayUITableResult;
 
@@ -29,5 +30,11 @@ public class SaleRecordsServiceImpl implements ISaleRecordsService {
         System.out.println("SaleRecordsServiceImpl.add");
         int i = iSaleRecordsDao.add(goodsId, customer, sold);
         return i == 1;
+    }
+
+    @Override
+    public List<SaleRecordsVO> selectCount() {
+        System.out.println("SaleRecordsServiceImpl.selectCount");
+        return iSaleRecordsDao.selectCount();
     }
 }

@@ -3,6 +3,7 @@ package com.kowalski.dao.impl;
 import com.kowalski.dao.ISaleRecordsDao;
 import com.kowalski.pojo.SaleRecords;
 import com.kowalski.pojo.query.SaleRecordsQuery;
+import com.kowalski.pojo.vo.SaleRecordsVO;
 import com.kowalski.utils.JDBCUtil;
 import lombok.SneakyThrows;
 
@@ -101,6 +102,29 @@ public class SaleRecordsDaoImpl implements ISaleRecordsDao {
         }
         JDBCUtil.close(conn, pStmt, rs);
         return count;
+    }
+
+    @Override
+    @SneakyThrows
+    public List<SaleRecordsVO> selectCount() {
+        System.out.println("ClassDaoImpl.selectClassCount");
+        Connection conn = JDBCUtil.getConnection();
+        List<SaleRecordsVO> list = new ArrayList<>();
+        String sql = "SELECT g.`name`,sum(sold) as s\n" +
+                "FROM sale_records AS sr\n" +
+                "INNER JOIN goods AS g\n" +
+                "ON g.id = sr.goods_id\n" +
+                "WHERE 1=1\n" +
+                "GROUP BY g.id;";
+        PreparedStatement pStmt = conn.prepareStatement(sql);
+        ResultSet rs = pStmt.executeQuery();
+        while(rs.next()){
+            String goods = rs.getString("name");
+            int value = rs.getInt("s");
+            SaleRecordsVO srv = new SaleRecordsVO(goods, value);
+            list.add(srv);
+        }
+        return list;
     }
 
     @Override

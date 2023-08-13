@@ -4,6 +4,7 @@ import com.kowalski.dao.ISupplyRecordsDao;
 import com.kowalski.dao.impl.SupplyRecordsDaoImpl;
 import com.kowalski.pojo.SupplyRecords;
 import com.kowalski.pojo.query.SupplyRecordsQuery;
+import com.kowalski.pojo.vo.SupplyRecordsVO;
 import com.kowalski.service.ISupplyRecordsService;
 import com.kowalski.utils.LayUITableResult;
 
@@ -29,5 +30,11 @@ public class SupplyRecordsServiceImpl implements ISupplyRecordsService {
         System.out.println("SupplyRecordsServiceImpl.add");
         int i = iSupplyRecordsDao.add(supplyId, shopId, goodsId, count);
         return i == 1;
+    }
+
+    @Override
+    public List<SupplyRecordsVO> selectCount() {
+        System.out.println("SupplyRecordsServiceImpl.selectCount");
+        return iSupplyRecordsDao.selectCount();
     }
 }
