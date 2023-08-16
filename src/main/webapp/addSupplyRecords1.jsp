@@ -120,16 +120,22 @@
             },
             'json'
         );
-        $.post(
-            '<%=request.getContextPath()%>/supplyRecords?method=selectGoods',
-            function (jsonObj) {
-                // console.log(jsonObj)
-                $(jsonObj).each(function () {
-                    $('#goodsId').append('<option value="' + this.id + '">' + this.name + '</option>');
-                });
-            },
-            'json'
-        );
+        $('#supplyId').change(function (){
+            $('#goodsId option:gt(0)').remove();
+            var supplyId =$('#supplyId').val();
+            $.post(
+                '<%=request.getContextPath()%>/supplyRecords?method=selectGoods',
+                {'supplyId':supplyId},
+                function (jsonObj) {
+                    // console.log(jsonObj)
+                    $(jsonObj).each(function () {
+                        $('#goodsId').append('<option value="' + this.id + '">' + this.name + '</option>');
+                    });
+                },
+                'json'
+            );
+        })
+
     })
 </script>
 

@@ -117,8 +117,16 @@ public class SupplyRecordsController extends HttpServlet {
     private void selectGoods(HttpServletRequest req, HttpServletResponse resp) {
         System.out.println("SupplyRecordsController.selectGoods");
         Connection conn = JDBCUtil.getConnection();
-        String sql = "select id, name from goods ";
+        String sql = "SELECT goods_id AS 'id', goods.`name` AS 'name'\n" +
+                "FROM supply_form\n" +
+                "INNER JOIN supply\n" +
+                "ON supply_form.supply_id = supply.id\n" +
+                "INNER JOIN goods\n" +
+                "ON goods_id = goods.id\n" +
+                "WHERE supply_id = ?";
         PreparedStatement pStmt = conn.prepareStatement(sql);
+        int supplyId = Integer.parseInt(req.getParameter("supplyId"));
+        pStmt.setInt(1,supplyId);
         System.out.println(pStmt);
         ResultSet rs = pStmt.executeQuery();
         List<Goods> list = new ArrayList<>();
