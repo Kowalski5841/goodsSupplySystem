@@ -122,6 +122,7 @@ public class goodsController extends HttpServlet {
             i = Integer.parseInt(id);
         }
 
+
         String name = req.getParameter("name");
         GoodsQuery gq = new GoodsQuery(page, limit, i, name);
         LayUITableResult layUITableResult = iGoodsService.selectByPage(gq);
